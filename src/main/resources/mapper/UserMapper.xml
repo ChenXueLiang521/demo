@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tencentcloudapi.dao.UserMapper">
+
+    <select id="findUserInfo" resultType="com.tencentcloudapi.model.User">
+        select id,name,ctime  from user;
+    </select>
+    <insert id="addUserInfo" parameterType="com.tencentcloudapi.model.User">
+        insert into user (id, name,ctime
+        )
+        values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},#{ctime}
+        )
+    </insert>
+    <delete id="delUserInfo" parameterType="java.lang.Integer">
+        delete from user where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+</mapper>

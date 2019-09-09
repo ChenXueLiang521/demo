@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>添加人脸</title>
+    <meta charset="utf-8">
+</head>
+<body>
+<button onclick="openMedia()">开启摄像头</button>
+<video id="video" width="500px" height="500px" autoplay="autoplay"></video>
+
+<canvas id="canvas" width="500px" height="500px"></canvas>
+<br>
+<input type="text" id="msg" placeholder="请输入姓名"><br>
+<input type="radio" name="sex" value="1">男
+<input type="radio" name="sex" value="2">女
+<br>
+<button onclick="takePhoto()">拍照</button>
+<!-- <img id="imgTag" src="" alt="imgTag"> -->
+<button onclick="closeMedia()">关闭摄像头</button>
+<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+<script>
+    let mediaStreamTrack=null; // 视频对象(全局)
+    function openMedia() {
+        let constraints = {
+            video: { width: 500, height: 500 },
+            audio: true
+        };
+        //获得video摄像头
+        let video = document.getElementById('video');
+        navigator.getUserMedia = navigator.getUserMedia ||
+            navigator.webkitGetUserMedia ||
+            navigator.mozGetUserMedia ||
+            navigator.msGetUserMedia;
+        let promise = navigator.mediaDevices.getUserMedia(constraints);
+        promise.then((mediaStream) => {
+            mediaStreamTrack = typeof mediaStream.stop === 'function' ? mediaStream : mediaStream.getTracks()[1];
+            video.srcObject = mediaStream;
+            video.play();
+        });
+    }
+
+    // 拍照
+    function takePhoto() {
+        //获得Canvas对象
+        let video = document.getElementById('video');
+        let canvas = document.getElementById('canvas');
+        let ctx = canvas.getContext('2d');
+        ctx.drawImage(video, 0, 0, 500, 500);
+
+		let msg = $('#msg').val();
+		let sex = $("input[name='sex']:checked").val();
+		if (msg=='') {
+			alert('请输入姓名');
+		}
+		if (sex!=1||sex!=0) {
+			sex = 0;
+		}
+		console.log('sex',sex)
+        // toDataURL  ---  可传入'image/png'---默认, 'image/jpeg'
+        let img = document.getElementById('canvas').toDataURL();
+        // 这里的img就是得到的图片
+        console.log('img-----', img);
+		$.ajax({
+		    url:"/createPerson",    //请求的url地址
+//		    dataType:"json",   //返回格式为json
+		    async:true,//请求是否异步，默认为异步，这也是ajax重要特性
+		    data:{
+                "personName":msg,
+                "gender":sex,
+                "image":img
+                },    //参数值
+		    type:"POST",   //请求方式
+		    success:function(res){
+		        if (res=="success"){
+		            alert("添加人员成功");
+                }else{
+		            alert("添加人员失败");
+                }
+		        //请求成功时处理
+			    console.log(res)
+		    },
+		    error:function(err){
+		    //请求出错处理
+                alert("添加人员失败");
+		        console.log(err)
+		    }
+		});
+        //document.getElementById('imgTag').src=img;
+    }
+
+    // 关闭摄像头
+    function closeMedia() {
+        mediaStreamTrack.stop();
+    }
+</script>
+</body>

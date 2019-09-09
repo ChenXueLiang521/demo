@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tencentcloudapi.dao.TenFaceUserMapper">
+    <select id="selectByUserName" resultType="com.tencentcloudapi.model.TenFaceUser" >
+        select * from ten_face_user where login_name =#{userName}
+    </select>
+    
+    <insert id="insertUserInfo" parameterType="java.util.Map">
+        insert into ten_face_user (login_name,password,mobile,gender,state,add_time)
+        value (#{userName},#{password},#{mobile},#{gender},1,#{addTimes})
+    </insert>
+
+</mapper>
