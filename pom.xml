@@ -147,20 +147,8 @@
                     </execution>
                 </executions>
             </plugin>-->
+
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<configuration>
-					<archive>
-						<manifest>
-							<addClasspath>true</addClasspath>
-							<!--<classpathPrefix>lib/</classpathPrefix>-->
-							<mainClass>com.tencentcloudapi.DemoApplication</mainClass>
-						</manifest>
-					</archive>
-				</configuration>
-			</plugin>
-			<!--<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
                 <executions>
@@ -178,10 +166,23 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>-->
-
+            </plugin>
 
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>lib/</classpathPrefix>
+							<mainClass>com.tencentcloudapi.DemoApplication</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+
+			<!--<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<configuration>
 					<descriptors>src/main/assembly/assembly.xml</descriptors>
@@ -195,7 +196,7 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
+			</plugin>-->
 		</plugins>
 	</build>
 
