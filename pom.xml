@@ -166,7 +166,7 @@
                         </configuration>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>-->
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -175,12 +175,12 @@
 					<archive>
 						<manifest>
 							<addClasspath>true</addClasspath>
-							<classpathPrefix>lib/</classpathPrefix>
+							<!--<classpathPrefix>lib/</classpathPrefix>-->
 							<mainClass>com.tencentcloudapi.DemoApplication</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
-			</plugin>-->
+			</plugin>
 
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
